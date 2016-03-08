@@ -1,0 +1,7 @@
+<h1><%= poll.title %></h1>
+<br>
+<% poll.options.forEach(function(option) { %>
+
+    <strong> <%= option.name %></strong> - <%= option.votes %>
+
+<% }) %>
