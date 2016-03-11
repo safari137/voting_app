@@ -1,23 +1,23 @@
-<% include ../partials/header.ejs %>
+<% include ./partials/header.ejs %>
 <div class="container text-center">
-<h1>Current Polls</h1>
+<h1>My Polls</h1>
 <div class="content-container polls">
     
-    <% if (polls.length < 1) { %>
+    <% if (user.polls.length < 1) { %>
         <h3>No Polls</h3>
     <% } %>
     
-    <% polls.forEach(function(poll, index, arr) { %>
-        
+    <% user.polls.forEach(function(poll) { %>
         <a href="/poll/<%= poll._id %>">
             <div class="poll">
                 <%= poll.title %>
             </div>
         </a>
+        
     <% }) %>
 </div>
 
-<% include ../partials/footer.ejs %>
+<% include ./partials/footer.ejs %>
 
 </div>
 

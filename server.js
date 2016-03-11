@@ -1,18 +1,28 @@
 var express     = require("express"),
     mongoose    = require("mongoose"),
     app         = express(),
-    seedDB      = require('./seedDB');
+    passport    = require('passport'),
+    bodyParser  = require('body-parser'),
+    passport    = require('passport'),
+    session     = require('express-session'),
+    flash       = require('connect-flash');
     
-mongoose.connect("mongodb://localhost/votes");
+require('./config/passport')(passport);
+    
+mongoose.connect(process.env.MONGOLAB_URI);
 
-seedDB();
+app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ extended: true }));
 
-var indexRoutes = require("./routes/index"),
-    pollRoutes  = require("./routes/poll");
+
+app.use(session({ secret: 'mymadeupsecret' }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
+require("./app/routes")(app, passport);
 
 app.set('view engine', 'ejs');
-app.use("/", indexRoutes);
-app.use("/poll", pollRoutes);
 
     
 app.listen(process.env.PORT, function() {

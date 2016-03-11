@@ -1,0 +1,96 @@
+.navbar-default .navbar-nav>li>a, 
+.navbar-default .navbar-brand {
+    color: #ddd;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+    background: #000;
+    color: #fff;
+}
+
+.navbar-default {
+    background: #333;
+    color: white;
+}
+
+.footer {
+    text-align: left;
+    font-size: .9em;
+}
+
+.polls a {
+    color: #333;
+}
+
+.polls a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.poll {
+    padding-top: 10px;
+    height: 45px;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+.poll:hover {
+    background: #333;
+    border: 1px solid black;
+    border-radius: 5px;
+    letter-spacing: 1.5px;
+}
+
+.content-container {
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 2px;
+    width: 80%;
+    margin: 25px auto;
+    background: #ddd;
+}
+
+.form {
+    padding-top: 30px;
+}
+
+.form-group {
+    margin-right: 20%;
+    margin-left: 20%;
+}
+
+textarea.form-control {
+    height: 150px;
+}
+
+.dropdown-menu>li>a {
+    margin: 3px;
+}
+
+.box {
+    display: inline-block;
+    height: 425px;
+    vertical-align: top;
+    margin-left: 25px;
+}
+
+.right {
+    margin-left: 125px;
+    padding-top: 75px;
+    min-width: 100px;
+}
+
+.key-box {
+    border: 1px solid black;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+
+.key-label {
+    padding-left: 15px;
+}
+
+body {
+    background: #eee;
+}

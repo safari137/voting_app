@@ -1,7 +1,54 @@
-<h1><%= poll.title %></h1>
-<br>
-<% poll.options.forEach(function(option) { %>
 
-    <strong> <%= option.name %></strong> - <%= option.votes %>
+<% include ../partials/header.ejs %>
+<div class="container">
+    <h1 class="text-center"><%= poll.title %></h1>
+    <br>
+    <div class="content-container">
+        <input type="hidden" id="pollid" value="<%= poll._id %>">
+       <% if (user.canVote) { %>
+            <div class="form-group" id="vote-info">
+                <select id="selectList" class="form-control">
+                    <option value="" disabled selected>Select Vote Option</option>
+                <% poll.options.forEach(function(option) { %>
+                    
+                    <option value=" <%= option.id %> "> <%= option.name %></option>
+                    
+                <% }) %>
+                    <option value="selectNew">Custom Option</option>
+                </select>
+                <div id="customOption">
+                    
+                </div>
+                <button class="btn btn-primary btn-block" id="castVote">Vote</button>
+            </div>
+        <% } else if (!isAuthenticated) {   %>
+            <h3 class="text-center">You must be logged in to vote.</h3>
+        <% } else { %>
+            <h3 class="text-center">You have already voted.</h3>
+        <% } %>
+        
+        
+        <hr>
+        
+        <div class="box">
+            <canvas id="myChart" width="400" height="400"></canvas>
+        </div>
+        
+        <div class="right box">
 
-<% }) %>
+        </div>
+        <% if (user.isOwner) { %>
+        <div>
+            <button class="delete btn btn-danger btn-block" id="<%= poll._id %>">Delete Poll</button>
+        </div>
+        <% } %>
+    </div>
+
+
+<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+<script src="/scripts/js/vote.js"></script>
+
+<% include ../partials/footer.ejs %>
+</div>
