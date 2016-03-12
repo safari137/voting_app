@@ -10,30 +10,44 @@ function PollController() {
         var options = req.body.poll.options.split('\r\n');
         
         Poll.create({title: title, owner: req.user._id}, function(err, createdPoll) {
-           if (err) {
-               console.log(err);
-               return;
-           } 
-           options.forEach(function(option, index, array) {
-               Option.create({name: option, votes: 0 }, function(err, createdOption) {
-                    if (err) {
-                        console.log(err);
-                        return;
-                    }
-                    createdPoll.options.push(createdOption);
-                    if (index === array.length - 1) {
-                        createdPoll.save();
-                        User.findById(req.user._id, function(err, user) {
-                            if (err) throw err;
-                            
-                            user.polls.push(createdPoll);
-                            user.save();
-                        });
-                    }
-               });
-           });
+            if (err) throw err;
+            
+            addAllOptionsToPoll(options, createdPoll, function() {
+                pushPollToUser(createdPoll, req.user._id);   
+            });   
+            
         });
         res.redirect('/poll');
+    }
+    
+    var addAllOptionsToPoll = function(options, poll, callback) {
+        options.forEach(function(option, index, array) {
+            createOption(option, 0, function(option) {
+                poll.options.push(option);
+                
+                if (index === array.length - 1) {
+                    callback(poll);
+                    poll.save();
+                }
+            });
+        });
+    }
+    
+    var createOption = function(name, votes, callback) {
+        Option.create({name: name, votes: votes}, function(err, option) {
+            if (err)  throw err;
+            
+           callback(option); 
+        });
+    }
+    
+    var pushPollToUser = function(poll, userId) {
+        User.findById(userId, function(err, user) {
+            if (err) throw err;
+            
+            user.polls.push(poll);
+            user.save();
+        });
     }
     
     
@@ -131,17 +145,12 @@ function PollController() {
            }
            
            if (!req.body.option) return;
-           Option.create({name: req.body.option, votes: 1}, function(err, newOption) {
-               if (err) throw err;
-               
-               poll.options.push(newOption);
-               
-               newOption.save(function(err, result) {
-                   if (err) throw err;
-                   poll.voters.push(req.user._id);
-                   poll.save();
-                   res.end();
-               });
+           
+           createOption(req.body.option, 1, function(option) {
+              poll.options.push(option); 
+              poll.voters.push(req.user._id);
+              poll.save();
+              res.end();
            });
         });
     }
