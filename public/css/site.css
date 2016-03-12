@@ -70,6 +70,7 @@ textarea.form-control {
 .box {
     display: inline-block;
     height: 425px;
+    width: 40%;
     vertical-align: top;
     margin-left: 25px;
 }

@@ -74,8 +74,12 @@ function getAndLoadData() {
         });
 }
 
+
+var myPieChart;
 function loadData(data) {
     chartData = [];
+    if (myPieChart)
+        myPieChart.destroy();
     
     data.forEach(function(item, index, arr) {
         var color = (index < 10) ? colors[index] : getRandomColor(),
@@ -85,7 +89,7 @@ function loadData(data) {
         
         if (index === arr.length - 1) {
             var ctx = document.getElementById("myChart").getContext("2d");
-            var myPieChart = new Chart(ctx).Pie(chartData);
+            myPieChart = new Chart(ctx).Pie(chartData);
             createGraphKey();
         }
     });

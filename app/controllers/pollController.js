@@ -39,9 +39,11 @@ function PollController() {
     
     this.deletePoll = function(req, res) {
          Poll.findById(req.params.id, function(err, poll) {
-             if (err) throw err;
-             
-            if (poll.owner.toString !== req.user._id.toString) {
+            if (err) throw err;
+            
+            var isOwner = (poll.owner.toString === req.user._id.toString);
+            
+            if (!isOwner) {
                 res.end();
                 return;
             }
