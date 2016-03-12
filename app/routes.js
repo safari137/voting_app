@@ -60,6 +60,8 @@ function routes(app, passport) {
     app.route("/poll/vote/:optionId").get(pollController.getVotes);
     
     app.route("/api/poll/:id/options").get(pollController.jsonGetOptions);
+    
+    app.route("/*").get(function(req, res) { res.redirect("/") });
 }
 
 
